@@ -22,4 +22,26 @@ const createBlog = async (req, res) => {
   }
 };
 
-export { getAllBlogs, createBlog };
+const updateBlog = async (req, res) => {
+  try {
+    const { id } = req.params; // Zugriff auf die ID aus den Routenparametern
+    const newBlogData = req.body; // Neue Blog-Daten aus dem Request Body
+
+    // Hier können Sie die ID verwenden, um den entsprechenden Blog zu finden und zu aktualisieren
+    const updatedBlog = await Blog.findByIdAndUpdate(id, newBlogData, {
+      new: true,
+    });
+
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found!" });
+    }
+
+    // Erfolgreiche Antwort mit dem aktualisierten Blog
+    res.json({ message: "Blog updated", updatedBlog });
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export { getAllBlogs, createBlog, updateBlog };
