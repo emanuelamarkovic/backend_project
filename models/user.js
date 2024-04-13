@@ -16,6 +16,20 @@ const userSchema = new Schema({
     required: [true, "you have to enter the password!"],
     minlength: [8, "{VALUE} must be at least 8 char!"],
   },
+  blogs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "blog",
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const User = model("user", userSchema);

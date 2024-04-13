@@ -20,6 +20,7 @@ const signup = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      blogs: [],
     };
     const userExists = await User.findOne({ name });
     if (userExists) {

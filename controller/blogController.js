@@ -1,4 +1,5 @@
 import Blog from "../models/blog.js";
+import User from "../models/user.js";
 
 const getAllBlogs = async (req, res) => {
   try {
@@ -12,8 +13,16 @@ const getAllBlogs = async (req, res) => {
 
 const createBlog = async (req, res) => {
   try {
-    const { title, description, user } = req.body;
-    const newBlog = { title, description, user };
+    const { title, description, image, user } = req.body;
+    try {
+      const userExists = await User.findById(user);
+      if (!userExists) {
+        return res.status(400).json({ message: "User not found" });
+      }
+    } catch (error) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    const newBlog = { title, description, image, user };
     await Blog.create(newBlog);
     res.json({ message: "New blog added", newBlog });
   } catch (error) {

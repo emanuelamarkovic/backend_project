@@ -12,8 +12,21 @@ const blogSchema = new Schema({
     minlength: [5, "{VALUE} must be at least 5 char!"],
   },
   user: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "user",
     required: [true, "you have to enter the user!"],
+  },
+  image: {
+    type: String,
+    required: [true, "you have to enter the image!"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
